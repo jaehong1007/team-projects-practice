@@ -42,7 +42,10 @@ STATICFILES_DIRS = [
     STATIC_DIR,
 ]
 
-TEMPLATE_DIR = os.path.join(ROOT_DIR, 'templates')
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+
+
+AUTH_USER_MODEL = 'member.User'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -58,6 +61,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'django_extensions',
+    'member',
 ]
 
 MIDDLEWARE = [
