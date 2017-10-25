@@ -9,18 +9,40 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
-
+import json
 import os
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# team_project_prac/pratice_project/
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# team_project_prac/
+ROOT_DIR = os.path.dirname(BASE_DIR)
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
+# team_project_prac/.config_secret/
+CONFIG_SECRET_DIR = os.path.join(ROOT_DIR, '.config_secret')
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '8n6k+jr3x=w(lyq1c=f*j)d-vkiyv@50gu=n$sy6915#hn)t!%'
+# settings_common.json파일을 읽고, config_secret_common_str 변수에 할당
+f = open(os.path.join(CONFIG_SECRET_DIR, 'settings_common.json'))
+config_secret_common_str = f.read()
+f.close()
+
+config_secret_common = json.loads(config_secret_common_str)
+
+SECRET_KEY = config_secret_common['django']['secret_key']
+
+# team_project_prac/practice_project/media/
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+# team_project_prac/practice_project/static/
+
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    STATIC_DIR,
+]
+
+TEMPLATE_DIR = os.path.join(ROOT_DIR, 'templates')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -54,7 +76,9 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            TEMPLATE_DIR,
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -103,9 +127,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko-kr'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
